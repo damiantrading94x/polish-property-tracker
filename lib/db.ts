@@ -240,7 +240,7 @@ export function getListings(cityId: number, marketType?: string): Listing[] {
   return result.sort((a, b) => a.price_per_m2 - b.price_per_m2);
 }
 
-export function upsertListing(input: ListingInput): Listing {
+export function upsertListing(input: ListingInput, skipSave = false): Listing {
   const db = loadDb();
   const existingIdx = db.listings.findIndex(l => l.city_id === input.city_id && l.external_id === input.external_id);
 
@@ -261,7 +261,7 @@ export function upsertListing(input: ListingInput): Listing {
       address: input.address ?? null, url: input.url ?? null,
       last_seen: todayStr(), is_active: 1,
     };
-    saveDb(db);
+    if (!skipSave) saveDb(db);
     return db.listings[existingIdx];
   } else {
     const listing: Listing = {
@@ -280,17 +280,25 @@ export function upsertListing(input: ListingInput): Listing {
       listing_id: listing.id, price: input.price, price_per_m2: input.price_per_m2,
       recorded_at: todayStr(), created_at: nowStr(),
     });
-    saveDb(db);
+    if (!skipSave) saveDb(db);
     return listing;
   }
 }
 
-export function deactivateOldListings(cityId: number, activeExternalIds: string[]): number {
+/** Flush in-memory DB to disk (use after batch operations with skipSave=true) */
+export function flushDb(): void {
+  const db = loadDb();
+  saveDb(db);
+}
+
+export function deactivateOldListings(cityId: number, activeExternalIds: string[], marketType?: string): number {
   const db = loadDb();
   const activeSet = new Set(activeExternalIds);
   let count = 0;
   for (const listing of db.listings) {
     if (listing.city_id === cityId && listing.is_active === 1 && !activeSet.has(listing.external_id)) {
+      // If marketType specified, only deactivate listings of that same market type
+      if (marketType && listing.market_type !== marketType) continue;
       listing.is_active = 0;
       count++;
     }

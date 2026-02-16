@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCity, upsertListing, deactivateOldListings, logRefresh, createListingSnapshot } from '@/lib/db';
+import { getCity, upsertListing, deactivateOldListings, logRefresh, createListingSnapshot, flushDb } from '@/lib/db';
 import { scrapeOtodom } from '@/lib/scrapers/otodom';
 import type { ListingInput } from '@/lib/types';
 
@@ -52,7 +52,7 @@ export async function POST(
         market_type: market === 'SECONDARY' ? 'secondary' : 'primary',
       };
 
-      const upserted = upsertListing(input);
+      const upserted = upsertListing(input, true); // skipSave - batch write at end
       activeIds.push(listing.id);
 
       if (upserted.first_seen === upserted.last_seen) {
@@ -62,8 +62,12 @@ export async function POST(
       }
     }
 
-    // Deactivate listings that are no longer found
-    const deactivated = deactivateOldListings(city.id, activeIds);
+    // Flush all listing changes in one write
+    flushDb();
+
+    // Deactivate listings that are no longer found (filtered by market type)
+    const dbMarketType = market === 'SECONDARY' ? 'secondary' : market === 'ALL' ? undefined : 'primary';
+    const deactivated = deactivateOldListings(city.id, activeIds, dbMarketType);
 
     // Create listing price snapshot
     createListingSnapshot(city.id);
