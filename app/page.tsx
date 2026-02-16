@@ -5,29 +5,30 @@ import CityCard from '@/components/CityCard';
 import type { City, CityCardData } from '@/lib/types';
 
 // Known Polish cities with their Otodom slugs
+// otodom_city_slug = full path after voivodeship: county/municipality/city
 const POLISH_CITIES = [
-  { name: 'Ełk', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'elk' },
-  { name: 'Suwałki', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'suwalki' },
-  { name: 'Warszawa', voivodeship: 'mazowieckie', voivodeship_slug: 'mazowieckie', otodom_city_slug: 'warszawa' },
-  { name: 'Kraków', voivodeship: 'małopolskie', voivodeship_slug: 'malopolskie', otodom_city_slug: 'krakow' },
-  { name: 'Wrocław', voivodeship: 'dolnośląskie', voivodeship_slug: 'dolnoslaskie', otodom_city_slug: 'wroclaw' },
-  { name: 'Poznań', voivodeship: 'wielkopolskie', voivodeship_slug: 'wielkopolskie', otodom_city_slug: 'poznan' },
-  { name: 'Gdańsk', voivodeship: 'pomorskie', voivodeship_slug: 'pomorskie', otodom_city_slug: 'gdansk' },
-  { name: 'Łódź', voivodeship: 'łódzkie', voivodeship_slug: 'lodzkie', otodom_city_slug: 'lodz' },
-  { name: 'Katowice', voivodeship: 'śląskie', voivodeship_slug: 'slaskie', otodom_city_slug: 'katowice' },
-  { name: 'Lublin', voivodeship: 'lubelskie', voivodeship_slug: 'lubelskie', otodom_city_slug: 'lublin' },
-  { name: 'Białystok', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'bialystok' },
-  { name: 'Olsztyn', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'olsztyn' },
-  { name: 'Rzeszów', voivodeship: 'podkarpackie', voivodeship_slug: 'podkarpackie', otodom_city_slug: 'rzeszow' },
-  { name: 'Szczecin', voivodeship: 'zachodniopomorskie', voivodeship_slug: 'zachodniopomorskie', otodom_city_slug: 'szczecin' },
-  { name: 'Bydgoszcz', voivodeship: 'kujawsko-pomorskie', voivodeship_slug: 'kujawsko--pomorskie', otodom_city_slug: 'bydgoszcz' },
-  { name: 'Toruń', voivodeship: 'kujawsko-pomorskie', voivodeship_slug: 'kujawsko--pomorskie', otodom_city_slug: 'torun' },
-  { name: 'Kielce', voivodeship: 'świętokrzyskie', voivodeship_slug: 'swietokrzyskie', otodom_city_slug: 'kielce' },
-  { name: 'Opole', voivodeship: 'opolskie', voivodeship_slug: 'opolskie', otodom_city_slug: 'opole' },
-  { name: 'Zielona Góra', voivodeship: 'lubuskie', voivodeship_slug: 'lubuskie', otodom_city_slug: 'zielona-gora' },
-  { name: 'Gorzów Wielkopolski', voivodeship: 'lubuskie', voivodeship_slug: 'lubuskie', otodom_city_slug: 'gorzow-wielkopolski' },
-  { name: 'Augustów', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'augustow' },
-  { name: 'Giżycko', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'gizycko' },
+  { name: 'Ełk', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'elcki/gmina-miejska--elk/elk' },
+  { name: 'Suwałki', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'suwalki/suwalki/suwalki' },
+  { name: 'Warszawa', voivodeship: 'mazowieckie', voivodeship_slug: 'mazowieckie', otodom_city_slug: 'warszawa/warszawa/warszawa' },
+  { name: 'Kraków', voivodeship: 'małopolskie', voivodeship_slug: 'malopolskie', otodom_city_slug: 'krakow/krakow/krakow' },
+  { name: 'Wrocław', voivodeship: 'dolnośląskie', voivodeship_slug: 'dolnoslaskie', otodom_city_slug: 'wroclaw/wroclaw/wroclaw' },
+  { name: 'Poznań', voivodeship: 'wielkopolskie', voivodeship_slug: 'wielkopolskie', otodom_city_slug: 'poznan/poznan/poznan' },
+  { name: 'Gdańsk', voivodeship: 'pomorskie', voivodeship_slug: 'pomorskie', otodom_city_slug: 'gdansk/gdansk/gdansk' },
+  { name: 'Łódź', voivodeship: 'łódzkie', voivodeship_slug: 'lodzkie', otodom_city_slug: 'lodz/lodz/lodz' },
+  { name: 'Katowice', voivodeship: 'śląskie', voivodeship_slug: 'slaskie', otodom_city_slug: 'katowice/katowice/katowice' },
+  { name: 'Lublin', voivodeship: 'lubelskie', voivodeship_slug: 'lubelskie', otodom_city_slug: 'lublin/lublin/lublin' },
+  { name: 'Białystok', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'bialystok/bialystok/bialystok' },
+  { name: 'Olsztyn', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'olsztyn/olsztyn/olsztyn' },
+  { name: 'Rzeszów', voivodeship: 'podkarpackie', voivodeship_slug: 'podkarpackie', otodom_city_slug: 'rzeszow/rzeszow/rzeszow' },
+  { name: 'Szczecin', voivodeship: 'zachodniopomorskie', voivodeship_slug: 'zachodniopomorskie', otodom_city_slug: 'szczecin/szczecin/szczecin' },
+  { name: 'Bydgoszcz', voivodeship: 'kujawsko-pomorskie', voivodeship_slug: 'kujawsko--pomorskie', otodom_city_slug: 'bydgoszcz/bydgoszcz/bydgoszcz' },
+  { name: 'Toruń', voivodeship: 'kujawsko-pomorskie', voivodeship_slug: 'kujawsko--pomorskie', otodom_city_slug: 'torun/torun/torun' },
+  { name: 'Kielce', voivodeship: 'świętokrzyskie', voivodeship_slug: 'swietokrzyskie', otodom_city_slug: 'kielce/kielce/kielce' },
+  { name: 'Opole', voivodeship: 'opolskie', voivodeship_slug: 'opolskie', otodom_city_slug: 'opole/opole/opole' },
+  { name: 'Zielona Góra', voivodeship: 'lubuskie', voivodeship_slug: 'lubuskie', otodom_city_slug: 'zielona-gora/zielona-gora/zielona-gora' },
+  { name: 'Gorzów Wielkopolski', voivodeship: 'lubuskie', voivodeship_slug: 'lubuskie', otodom_city_slug: 'gorzow-wielkopolski/gorzow-wielkopolski/gorzow-wielkopolski' },
+  { name: 'Augustów', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'augustowski/augustow/augustow' },
+  { name: 'Giżycko', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'gizycki/gmina-miejska--gizycko/gizycko' },
 ];
 
 export default function HomePage() {
@@ -302,7 +303,7 @@ export default function HomePage() {
               ) : (
                 <div className="space-y-3">
                   <p className="text-xs text-slate-500">
-                    Wpisz dane miasta (slug Otodom znajdziesz w URL na otodom.pl)
+                    Wpisz dane miasta. Ścieżkę Otodom znajdziesz w URL na otodom.pl (np. elcki/gmina-miejska--elk/elk)
                   </p>
                   <input
                     type="text"
@@ -327,7 +328,7 @@ export default function HomePage() {
                   />
                   <input
                     type="text"
-                    placeholder="Slug miasta w URL Otodom (np. augustow)"
+                    placeholder="Ścieżka w URL Otodom (np. elcki/gmina-miejska--elk/elk)"
                     value={customCity.otodom_city_slug}
                     onChange={(e) => setCustomCity(prev => ({ ...prev, otodom_city_slug: e.target.value }))}
                     className="input-modern text-sm"

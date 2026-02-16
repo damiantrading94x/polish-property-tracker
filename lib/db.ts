@@ -91,8 +91,8 @@ function currentMonth(): string {
 
 function seedDefaultData(db: DbData) {
   const defaultCities: CityInput[] = [
-    { name: 'Ełk', slug: 'elk', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'elk' },
-    { name: 'Suwałki', slug: 'suwalki', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'suwalki' },
+    { name: 'Ełk', slug: 'elk', voivodeship: 'warmińsko-mazurskie', voivodeship_slug: 'warminsko--mazurskie', otodom_city_slug: 'elcki/gmina-miejska--elk/elk' },
+    { name: 'Suwałki', slug: 'suwalki', voivodeship: 'podlaskie', voivodeship_slug: 'podlaskie', otodom_city_slug: 'suwalki/suwalki/suwalki' },
   ];
 
   for (const c of defaultCities) {
@@ -108,31 +108,111 @@ function seedDefaultData(db: DbData) {
   const suwalkiId = db.cities.find(c => c.slug === 'suwalki')!.id;
 
   const elkTxs: [string, number, number, number, string, string, string, string, string][] = [
+    // 2025-03
+    ['2025-03-05', 270000, 50.0, 5400, 'ul. Wojska Polskiego 8', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 2 piętro'],
+    ['2025-03-12', 189000, 36.0, 5250, 'ul. Gdańska 3/10', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 4 piętro'],
+    ['2025-03-22', 345000, 63.0, 5476, 'os. Północ II 3/2', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 1 piętro'],
+    // 2025-04
+    ['2025-04-03', 231000, 42.0, 5500, 'ul. Mickiewicza 5', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 3 piętro'],
+    ['2025-04-15', 357500, 65.0, 5500, 'ul. Słowackiego 12', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, parter'],
+    ['2025-04-28', 148500, 27.0, 5500, 'ul. Kilińskiego 8', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 1 piętro'],
+    ['2025-04-30', 299200, 52.0, 5754, 'ul. Armii Krajowej 20', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, nowsze budownictwo'],
+    // 2025-05
+    ['2025-05-08', 286000, 52.0, 5500, 'ul. Piłsudskiego 14', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 2 piętro'],
+    ['2025-05-19', 396000, 66.0, 6000, 'ul. Grunwaldzka 10', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 3 piętro, nowy blok'],
+    ['2025-05-25', 204000, 34.0, 6000, 'ul. Dąbrowskiego 6', 'mieszkanie', 'wtórny', 'RCN', '1 pokój z aneksem'],
+    // 2025-06
+    ['2025-06-02', 312000, 52.0, 6000, 'ul. Wojska Polskiego 18', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 4 piętro'],
+    ['2025-06-14', 250000, 44.0, 5682, 'os. Jeziorna 7/3', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, parter'],
+    ['2025-06-20', 414000, 69.0, 6000, 'ul. Słowackiego 20', 'mieszkanie', 'pierwotny', 'RCN', '4 pokoje, 2 piętro'],
+    ['2025-06-30', 180000, 30.0, 6000, 'ul. Gdańska 15', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 3 piętro'],
+    // 2025-07
+    ['2025-07-05', 295000, 50.0, 5900, 'ul. Piłsudskiego 22', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 1 piętro'],
+    ['2025-07-12', 372600, 62.1, 6000, 'ul. Grunwaldzka 30', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 2 piętro'],
+    ['2025-07-25', 258000, 43.0, 6000, 'ul. Armii Krajowej 5', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 2 piętro'],
+    // 2025-08
+    ['2025-08-04', 318000, 53.0, 6000, 'os. Północ II 8/4', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 3 piętro'],
     ['2025-08-15', 302500, 55.0, 5500, 'ul. Wojska Polskiego 12', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, parter'],
+    ['2025-08-22', 198000, 33.0, 6000, 'ul. Kilińskiego 14', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 2 piętro'],
+    ['2025-08-30', 426000, 66.0, 6455, 'ul. Mickiewicza 8/1', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, nowe osiedle'],
+    // 2025-09
     ['2025-09-03', 378000, 63.0, 6000, 'ul. Gdańska 8/4', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 2 piętro'],
+    ['2025-09-15', 330000, 55.0, 6000, 'ul. Dąbrowskiego 20', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 2 piętro'],
     ['2025-09-22', 264000, 44.0, 6000, 'ul. Armii Krajowej 15', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 3 piętro'],
+    ['2025-09-28', 210000, 35.0, 6000, 'ul. Piłsudskiego 3', 'mieszkanie', 'wtórny', 'RCN', '1 pokój, 4 piętro'],
+    // 2025-10
     ['2025-10-10', 336000, 56.0, 6000, 'ul. Mickiewicza 3/12', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 1 piętro'],
+    ['2025-10-18', 351000, 54.0, 6500, 'os. Północ II 12', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, nowsze budownictwo'],
     ['2025-10-28', 325000, 50.0, 6500, 'ul. Piłsudskiego 7', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 4 piętro'],
+    // 2025-11
     ['2025-11-05', 195000, 30.0, 6500, 'ul. Kilińskiego 22', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 2 piętro'],
+    ['2025-11-14', 390000, 60.0, 6500, 'ul. Słowackiego 5', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 2 piętro'],
     ['2025-11-18', 429000, 66.0, 6500, 'ul. Grunwaldzka 44', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 3 piętro'],
+    ['2025-11-28', 286000, 44.0, 6500, 'ul. Wojska Polskiego 25', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 1 piętro'],
+    // 2025-12
     ['2025-12-02', 287000, 41.0, 7000, 'os. Północ II 5/8', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, nowsze budownictwo'],
+    ['2025-12-12', 455000, 65.0, 7000, 'ul. Grunwaldzka 50', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, nowe, wykończone'],
     ['2025-12-20', 462000, 66.0, 7000, 'ul. Słowackiego 9', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 2 piętro'],
+    ['2025-12-28', 224000, 32.0, 7000, 'ul. Gdańska 20', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 3 piętro'],
+    // 2026-01
     ['2026-01-08', 350000, 50.0, 7000, 'ul. Wojska Polskiego 30', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 1 piętro, nowe'],
+    ['2026-01-15', 469000, 67.0, 7000, 'ul. Mickiewicza 15', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 2 piętro, wykończone'],
     ['2026-01-22', 245000, 35.0, 7000, 'ul. Dąbrowskiego 14', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka z aneksem kuchennym'],
+    ['2026-01-30', 378000, 54.0, 7000, 'os. Jeziorna 12/5', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 3 piętro, nowe'],
   ];
 
   const suwalkiTxs: [string, number, number, number, string, string, string, string, string][] = [
+    // 2025-03
+    ['2025-03-08', 300000, 54.0, 5556, 'ul. Noniewicza 10', 'mieszkanie', 'wtórny', 'RCN', '3 pokoje, 1 piętro'],
+    ['2025-03-18', 265000, 50.0, 5300, 'ul. Kościuszki 8', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 2 piętro'],
+    ['2025-03-28', 180000, 33.0, 5455, 'os. II 8/4', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, parter'],
+    // 2025-04
+    ['2025-04-05', 330000, 60.0, 5500, 'ul. Utrata 5', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 3 piętro'],
+    ['2025-04-14', 280500, 51.0, 5500, 'ul. Hamerszmita 6', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 1 piętro'],
+    ['2025-04-25', 192500, 35.0, 5500, 'ul. Wigierska 4', 'mieszkanie', 'wtórny', 'RCN', '1 pokój z aneksem, 2 piętro'],
+    ['2025-04-30', 385000, 70.0, 5500, 'ul. Sejneńska 10', 'mieszkanie', 'pierwotny', 'RCN', '4 pokoje, 1 piętro'],
+    // 2025-05
+    ['2025-05-10', 306000, 51.0, 6000, 'ul. Bakałarzewska 20', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 3 piętro'],
+    ['2025-05-18', 234000, 39.0, 6000, 'ul. Pułaskiego 12', 'mieszkanie', 'wtórny', 'RCN', '1 pokój, 4 piętro'],
+    ['2025-05-28', 420000, 70.0, 6000, 'ul. Noniewicza 25', 'mieszkanie', 'pierwotny', 'RCN', '4 pokoje, 2 piętro'],
+    // 2025-06
+    ['2025-06-05', 318000, 53.0, 6000, 'ul. Filipowska 8', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 2 piętro'],
+    ['2025-06-15', 252000, 42.0, 6000, 'ul. Kościuszki 15', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 3 piętro'],
+    ['2025-06-22', 390000, 65.0, 6000, 'ul. Utrata 12', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 1 piętro'],
+    ['2025-06-30', 186000, 31.0, 6000, 'os. II 10/6', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 3 piętro'],
+    // 2025-07
+    ['2025-07-08', 330000, 55.0, 6000, 'ul. Bakałarzewska 35', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 4 piętro'],
+    ['2025-07-15', 396000, 66.0, 6000, 'ul. Sejneńska 8', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, parter'],
+    ['2025-07-28', 240000, 40.0, 6000, 'ul. Hamerszmita 18', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 2 piętro'],
+    // 2025-08
+    ['2025-08-03', 348000, 58.0, 6000, 'ul. Filipowska 14', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 2 piętro'],
     ['2025-08-10', 348000, 60.0, 5800, 'ul. Noniewicza 15', 'mieszkanie', 'wtórny', 'RCN', '3 pokoje, parter'],
+    ['2025-08-18', 192000, 32.0, 6000, 'ul. Pułaskiego 8', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka, 1 piętro'],
+    ['2025-08-28', 312000, 52.0, 6000, 'ul. Wigierska 10', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 3 piętro'],
+    // 2025-09
     ['2025-09-05', 305000, 50.0, 6100, 'ul. Kościuszki 22', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 3 piętro'],
+    ['2025-09-15', 360000, 60.0, 6000, 'ul. Utrata 15/2', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 2 piętro'],
     ['2025-09-25', 390000, 60.0, 6500, 'ul. Utrata 8/3', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 1 piętro'],
+    ['2025-09-30', 208000, 32.0, 6500, 'ul. Noniewicza 5', 'mieszkanie', 'wtórny', 'RCN', '1 pokój, 4 piętro'],
+    // 2025-10
+    ['2025-10-08', 338000, 52.0, 6500, 'ul. Bakałarzewska 40', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 1 piętro'],
     ['2025-10-15', 273000, 42.0, 6500, 'ul. Hamerszmita 12', 'mieszkanie', 'wtórny', 'RCN', '2 pokoje, 4 piętro'],
     ['2025-10-30', 455000, 70.0, 6500, 'ul. Sejneńska 3', 'mieszkanie', 'pierwotny', 'RCN', '4 pokoje, 2 piętro'],
+    // 2025-11
+    ['2025-11-06', 325000, 50.0, 6500, 'ul. Filipowska 25', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 2 piętro'],
     ['2025-11-12', 208000, 32.0, 6500, 'os. II 14/2', 'mieszkanie', 'wtórny', 'RCN', 'kawalerka'],
+    ['2025-11-20', 416000, 64.0, 6500, 'ul. Kościuszki 30', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, 3 piętro'],
     ['2025-11-28', 406000, 58.0, 7000, 'ul. Bakałarzewska 67', 'mieszkanie', 'pierwotny', 'RCN', '3 pokoje, nowe osiedle'],
+    // 2025-12
+    ['2025-12-05', 350000, 50.0, 7000, 'ul. Wigierska 14', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 1 piętro'],
     ['2025-12-10', 336000, 48.0, 7000, 'ul. Filipowska 20', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, 4 piętro'],
     ['2025-12-22', 227500, 35.0, 6500, 'ul. Pułaskiego 5', 'mieszkanie', 'wtórny', 'RCN', '1 pokój z aneksem'],
+    ['2025-12-30', 490000, 70.0, 7000, 'ul. Sejneńska 12', 'mieszkanie', 'pierwotny', 'RCN', '4 pokoje, premium'],
+    // 2026-01
     ['2026-01-10', 525000, 70.0, 7500, 'ul. Noniewicza 40', 'mieszkanie', 'pierwotny', 'RCN', '4 pokoje, premium'],
+    ['2026-01-18', 360000, 48.0, 7500, 'ul. Utrata 20', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, nowe, wykończone'],
     ['2026-01-25', 375000, 50.0, 7500, 'ul. Wigierska 18', 'mieszkanie', 'pierwotny', 'RCN', '2 pokoje, nowe, wykończone'],
+    ['2026-01-31', 240000, 34.0, 7059, 'ul. Hamerszmita 22', 'mieszkanie', 'wtórny', 'RCN', '1 pokój, 2 piętro, po remoncie'],
   ];
 
   for (const [date, price, area, ppm2, addr, ptype, mtype, source, notes] of elkTxs) {
