@@ -59,7 +59,7 @@ export default function AddTransactionModal({ onSubmit, onClose }: AddTransactio
       <div className="modal-content max-w-lg" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-white">Dodaj transakcję</h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/[0.05]">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -69,21 +69,21 @@ export default function AddTransactionModal({ onSubmit, onClose }: AddTransactio
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Data transakcji *</label>
+              <label className="block text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wider">Data transakcji *</label>
               <input
                 type="date"
                 value={form.transaction_date}
                 onChange={(e) => setForm(prev => ({ ...prev, transaction_date: e.target.value }))}
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                className="input-modern"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Typ rynku</label>
+              <label className="block text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wider">Typ rynku</label>
               <select
                 value={form.market_type}
                 onChange={(e) => setForm(prev => ({ ...prev, market_type: e.target.value }))}
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                className="input-modern"
               >
                 <option value="pierwotny">Rynek pierwotny</option>
                 <option value="wtórny">Rynek wtórny</option>
@@ -93,26 +93,26 @@ export default function AddTransactionModal({ onSubmit, onClose }: AddTransactio
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Cena (PLN) *</label>
+              <label className="block text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wider">Cena (PLN) *</label>
               <input
                 type="number"
                 value={form.price}
                 onChange={(e) => setForm(prev => ({ ...prev, price: e.target.value }))}
                 placeholder="np. 350000"
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                className="input-modern"
                 required
                 min="0"
                 step="1"
               />
             </div>
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Powierzchnia (m²) *</label>
+              <label className="block text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wider">Powierzchnia (m²) *</label>
               <input
                 type="number"
                 value={form.area}
                 onChange={(e) => setForm(prev => ({ ...prev, area: e.target.value }))}
                 placeholder="np. 55.5"
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                className="input-modern"
                 required
                 min="0"
                 step="0.1"
@@ -121,32 +121,32 @@ export default function AddTransactionModal({ onSubmit, onClose }: AddTransactio
           </div>
 
           {pricePerM2 && (
-            <div className="bg-slate-900/50 rounded-lg px-4 py-2 text-center">
-              <span className="text-sm text-slate-400">Cena za m²: </span>
-              <span className="text-lg font-bold text-emerald-400">
+            <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-xl px-4 py-2.5 text-center">
+              <span className="text-xs text-slate-500">Cena za m²: </span>
+              <span className="text-base font-bold text-emerald-400">
                 {pricePerM2.toLocaleString('pl-PL')} zł/m²
               </span>
             </div>
           )}
 
           <div>
-            <label className="block text-sm text-slate-400 mb-1">Adres</label>
+            <label className="block text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wider">Adres</label>
             <input
               type="text"
               value={form.address}
               onChange={(e) => setForm(prev => ({ ...prev, address: e.target.value }))}
               placeholder="np. ul. Wojska Polskiego 12/4"
-              className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              className="input-modern"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Typ nieruchomości</label>
+              <label className="block text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wider">Typ nieruchomości</label>
               <select
                 value={form.property_type}
                 onChange={(e) => setForm(prev => ({ ...prev, property_type: e.target.value }))}
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                className="input-modern"
               >
                 <option value="mieszkanie">Mieszkanie</option>
                 <option value="dom">Dom</option>
@@ -155,13 +155,13 @@ export default function AddTransactionModal({ onSubmit, onClose }: AddTransactio
               </select>
             </div>
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Uwagi</label>
+              <label className="block text-xs text-slate-500 mb-1.5 font-medium uppercase tracking-wider">Uwagi</label>
               <input
                 type="text"
                 value={form.notes}
                 onChange={(e) => setForm(prev => ({ ...prev, notes: e.target.value }))}
                 placeholder="np. 2 pokoje, 3 piętro"
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                className="input-modern"
               />
             </div>
           </div>
@@ -169,14 +169,15 @@ export default function AddTransactionModal({ onSubmit, onClose }: AddTransactio
           <div className="flex gap-3 pt-2">
             <button
               type="submit"
-              className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-lg font-medium transition-colors"
+              className="flex-1 btn-primary justify-center py-2.5 bg-emerald-600 hover:bg-emerald-500"
+              style={{ boxShadow: '0 0 0 1px rgba(16,185,129,0.3), 0 4px 12px -2px rgba(16,185,129,0.25)' }}
             >
               Dodaj transakcję
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2.5 rounded-lg text-slate-400 hover:text-white transition-colors"
+              className="px-6 py-2.5 rounded-xl text-slate-500 hover:text-white transition-colors"
             >
               Anuluj
             </button>

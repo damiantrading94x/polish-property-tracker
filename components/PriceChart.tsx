@@ -23,9 +23,9 @@ interface ChartDataPoint {
 export default function PriceChart({ snapshots, title }: PriceChartProps) {
   if (snapshots.length === 0) {
     return (
-      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">{title || 'Trend cenowy'}</h3>
-        <div className="flex items-center justify-center h-48 text-slate-400">
+      <div className="glass-card p-6">
+        <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">{title || 'Trend cenowy'}</h3>
+        <div className="flex items-center justify-center h-48 text-slate-500 text-sm">
           Brak danych do wyświetlenia wykresu
         </div>
       </div>
@@ -60,27 +60,28 @@ export default function PriceChart({ snapshots, title }: PriceChartProps) {
   const hasTransactionData = chartData.some(d => d.transactionAvg !== undefined);
 
   return (
-    <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-      <h3 className="text-lg font-semibold text-white mb-4">{title || 'Trend cenowy (zł/m²)'}</h3>
+    <div className="glass-card p-6">
+      <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-wider">{title || 'Trend cenowy (zł/m²)'}</h3>
       <ResponsiveContainer width="100%" height={320}>
         <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
           <XAxis
             dataKey="monthLabel"
-            stroke="#94a3b8"
-            tick={{ fill: '#94a3b8', fontSize: 12 }}
+            stroke="#334155"
+            tick={{ fill: '#64748b', fontSize: 11 }}
           />
           <YAxis
-            stroke="#94a3b8"
-            tick={{ fill: '#94a3b8', fontSize: 12 }}
+            stroke="#334155"
+            tick={{ fill: '#64748b', fontSize: 11 }}
             tickFormatter={(v) => `${(v / 1000).toFixed(1)}k`}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: '#1e293b',
-              border: '1px solid #475569',
-              borderRadius: '8px',
+              backgroundColor: '#141b2d',
+              border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: '12px',
               color: '#f1f5f9',
+              boxShadow: '0 8px 32px -8px rgba(0,0,0,0.5)',
             }}
             formatter={(value: number, name: string) => {
               const labels: Record<string, string> = {
@@ -100,19 +101,19 @@ export default function PriceChart({ snapshots, title }: PriceChartProps) {
                 listingAvg: 'Oferty - średnia',
                 listingMedian: 'Oferty - mediana',
               };
-              return <span className="text-sm">{labels[value] || value}</span>;
+              return <span className="text-xs text-slate-400">{labels[value] || value}</span>;
             }}
           />
           {hasTransactionData && (
             <>
-              <Line type="monotone" dataKey="transactionAvg" stroke="#22c55e" strokeWidth={2} dot={{ fill: '#22c55e', r: 4 }} activeDot={{ r: 6 }} connectNulls />
-              <Line type="monotone" dataKey="transactionMedian" stroke="#86efac" strokeWidth={1.5} strokeDasharray="5 5" dot={{ fill: '#86efac', r: 3 }} connectNulls />
+              <Line type="monotone" dataKey="transactionAvg" stroke="#10b981" strokeWidth={2} dot={{ fill: '#10b981', r: 3.5 }} activeDot={{ r: 5.5, stroke: '#10b981', strokeWidth: 2, fill: '#141b2d' }} connectNulls />
+              <Line type="monotone" dataKey="transactionMedian" stroke="#6ee7b7" strokeWidth={1.5} strokeDasharray="5 5" dot={{ fill: '#6ee7b7', r: 2.5 }} connectNulls />
             </>
           )}
           {hasListingData && (
             <>
-              <Line type="monotone" dataKey="listingAvg" stroke="#3b82f6" strokeWidth={2} dot={{ fill: '#3b82f6', r: 4 }} activeDot={{ r: 6 }} connectNulls />
-              <Line type="monotone" dataKey="listingMedian" stroke="#93c5fd" strokeWidth={1.5} strokeDasharray="5 5" dot={{ fill: '#93c5fd', r: 3 }} connectNulls />
+              <Line type="monotone" dataKey="listingAvg" stroke="#6366f1" strokeWidth={2} dot={{ fill: '#6366f1', r: 3.5 }} activeDot={{ r: 5.5, stroke: '#6366f1', strokeWidth: 2, fill: '#141b2d' }} connectNulls />
+              <Line type="monotone" dataKey="listingMedian" stroke="#a5b4fc" strokeWidth={1.5} strokeDasharray="5 5" dot={{ fill: '#a5b4fc', r: 2.5 }} connectNulls />
             </>
           )}
         </LineChart>

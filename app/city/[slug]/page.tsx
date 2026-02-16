@@ -169,8 +169,8 @@ export default function CityPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin-slow mx-auto mb-4" />
-          <p className="text-slate-400">Ładowanie danych...</p>
+          <div className="w-10 h-10 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin-slow mx-auto mb-4" />
+          <p className="text-slate-500 text-sm">Ładowanie danych...</p>
         </div>
       </div>
     );
@@ -179,9 +179,11 @@ export default function CityPage() {
   if (!stats) {
     return (
       <div className="text-center py-20">
-        <span className="text-5xl mb-4 block">🚫</span>
-        <h2 className="text-xl font-semibold text-white mb-2">Miasto nie znalezione</h2>
-        <a href="/" className="text-blue-400 hover:text-blue-300">← Powrót do dashboardu</a>
+        <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto mb-5">
+          <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+        </div>
+        <h2 className="text-lg font-semibold text-white mb-2">Miasto nie znalezione</h2>
+        <a href="/" className="text-indigo-400 hover:text-indigo-300 text-sm">← Powrót do dashboardu</a>
       </div>
     );
   }
@@ -193,15 +195,18 @@ export default function CityPage() {
       {/* Breadcrumb & Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <a href="/" className="text-sm text-slate-400 hover:text-white transition-colors">← Dashboard</a>
-          <h2 className="text-3xl font-bold text-white mt-1">{city.name}</h2>
-          <p className="text-slate-400">{city.voivodeship}</p>
+          <a href="/" className="text-xs text-slate-500 hover:text-indigo-400 transition-colors inline-flex items-center gap-1 group">
+            <svg className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            Dashboard
+          </a>
+          <h2 className="text-2xl font-semibold text-white mt-1.5">{city.name}</h2>
+          <p className="text-slate-500 text-sm">{city.voivodeship}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => handleRefresh('PRIMARY')}
             disabled={refreshing}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="btn-primary px-4 py-2 text-sm disabled:opacity-40 disabled:pointer-events-none"
           >
             {refreshing ? (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin-slow" />
@@ -210,12 +215,12 @@ export default function CityPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
             )}
-            Pobierz z Otodom (rynek pierwotny)
+            Pobierz z Otodom
           </button>
           <button
             onClick={() => handleRefresh('ALL')}
             disabled={refreshing}
-            className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="btn-secondary px-4 py-2 text-sm disabled:opacity-40 disabled:pointer-events-none"
           >
             Wszystkie oferty
           </button>
@@ -224,29 +229,29 @@ export default function CityPage() {
 
       {/* Refresh result banner */}
       {refreshResult && (
-        <div className={`rounded-lg px-4 py-3 text-sm ${
-          refreshResult.startsWith('✅') ? 'bg-green-900/30 text-green-400 border border-green-800' :
-          refreshResult.startsWith('⚠️') ? 'bg-yellow-900/30 text-yellow-400 border border-yellow-800' :
-          'bg-red-900/30 text-red-400 border border-red-800'
+        <div className={`rounded-xl px-4 py-3 text-sm border ${
+          refreshResult.startsWith('✅') ? 'bg-emerald-500/5 text-emerald-400 border-emerald-500/20' :
+          refreshResult.startsWith('⚠️') ? 'bg-amber-500/5 text-amber-400 border-amber-500/20' :
+          'bg-red-500/5 text-red-400 border-red-500/20'
         }`}>
           {refreshResult}
-          <button onClick={() => setRefreshResult(null)} className="float-right text-current opacity-60 hover:opacity-100">✕</button>
+          <button onClick={() => setRefreshResult(null)} className="float-right text-current opacity-40 hover:opacity-100 transition-opacity">✕</button>
         </div>
       )}
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <StatCard
           label="Oferty aktywne"
           value={String(stats.listings.total)}
           sub={stats.listings.avgPricePerM2 > 0 ? `śr. ${formatPricePerM2(stats.listings.avgPricePerM2)}` : undefined}
-          color="blue"
+          color="indigo"
         />
         <StatCard
           label="Cena/m² (oferty)"
           value={stats.listings.medianPricePerM2 > 0 ? formatPricePerM2(stats.listings.medianPricePerM2) : '—'}
           sub={stats.listings.total > 0 ? `${formatPricePerM2(stats.listings.minPricePerM2)} – ${formatPricePerM2(stats.listings.maxPricePerM2)}` : undefined}
-          color="indigo"
+          color="purple"
         />
         <StatCard
           label="Transakcje (RCN)"
@@ -263,7 +268,7 @@ export default function CityPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-slate-700">
+      <div className="flex gap-1 bg-white/[0.02] border border-white/[0.04] rounded-xl p-1">
         {([
           ['overview', 'Przegląd'],
           ['listings', `Oferty (${listings.length})`],
@@ -272,10 +277,10 @@ export default function CityPage() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
+            className={`flex-1 px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ${
               activeTab === tab
-                ? 'border-blue-500 text-blue-400'
-                : 'border-transparent text-slate-400 hover:text-white hover:border-slate-600'
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/20'
+                : 'text-slate-400 hover:text-white hover:bg-white/[0.03]'
             }`}
           >
             {label}
@@ -290,28 +295,28 @@ export default function CityPage() {
           <PriceChart snapshots={stats.priceHistory} title={`Trend cen – ${city.name}`} />
 
           {/* Quick summary */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {/* Recent listings preview */}
-            <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+            <div className="glass-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">Najnowsze oferty</h3>
-                <button onClick={() => setActiveTab('listings')} className="text-sm text-blue-400 hover:text-blue-300">
-                  Zobacz wszystkie →
+                <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Najnowsze oferty</h3>
+                <button onClick={() => setActiveTab('listings')} className="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                  Wszystkie →
                 </button>
               </div>
               {listings.length === 0 ? (
-                <p className="text-slate-400 text-sm">Brak ofert. Kliknij &quot;Pobierz z Otodom&quot; aby pobrać.</p>
+                <p className="text-slate-500 text-sm">Brak ofert. Kliknij &quot;Pobierz z Otodom&quot; aby pobrać.</p>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-1">
                   {listings.slice(0, 5).map((l) => (
-                    <div key={l.id} className="flex items-center justify-between py-2 border-b border-slate-700/50 last:border-0">
+                    <div key={l.id} className="flex items-center justify-between py-2.5 border-b border-white/[0.03] last:border-0">
                       <div className="min-w-0 flex-1 mr-4">
                         <p className="text-sm text-white truncate">{l.title}</p>
-                        <p className="text-xs text-slate-400">{l.area} m² • {l.rooms ?? '?'} pok.</p>
+                        <p className="text-xs text-slate-500">{l.area} m² • {l.rooms ?? '?'} pok.</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-medium text-blue-400">{formatPricePerM2(l.price_per_m2)}</p>
-                        <p className="text-xs text-slate-400">{formatPrice(l.price)}</p>
+                        <p className="text-sm font-medium text-indigo-400">{formatPricePerM2(l.price_per_m2)}</p>
+                        <p className="text-xs text-slate-500">{formatPrice(l.price)}</p>
                       </div>
                     </div>
                   ))}
@@ -320,26 +325,26 @@ export default function CityPage() {
             </div>
 
             {/* Recent transactions preview */}
-            <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+            <div className="glass-card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">Ostatnie transakcje</h3>
-                <button onClick={() => setActiveTab('transactions')} className="text-sm text-blue-400 hover:text-blue-300">
-                  Zobacz wszystkie →
+                <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Ostatnie transakcje</h3>
+                <button onClick={() => setActiveTab('transactions')} className="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                  Wszystkie →
                 </button>
               </div>
               {transactions.length === 0 ? (
-                <p className="text-slate-400 text-sm">Brak danych transakcyjnych. Dodaj ręcznie lub importuj CSV.</p>
+                <p className="text-slate-500 text-sm">Brak danych transakcyjnych. Dodaj ręcznie lub importuj CSV.</p>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-1">
                   {transactions.slice(0, 5).map((tx) => (
-                    <div key={tx.id} className="flex items-center justify-between py-2 border-b border-slate-700/50 last:border-0">
+                    <div key={tx.id} className="flex items-center justify-between py-2.5 border-b border-white/[0.03] last:border-0">
                       <div className="min-w-0 flex-1 mr-4">
                         <p className="text-sm text-white truncate">{tx.address || 'Brak adresu'}</p>
-                        <p className="text-xs text-slate-400">{tx.transaction_date} • {tx.area} m² • {tx.market_type}</p>
+                        <p className="text-xs text-slate-500">{tx.transaction_date} • {tx.area} m² • {tx.market_type}</p>
                       </div>
                       <div className="text-right">
                         <p className="text-sm font-medium text-emerald-400">{formatPricePerM2(tx.price_per_m2)}</p>
-                        <p className="text-xs text-slate-400">{formatPrice(tx.price)}</p>
+                        <p className="text-xs text-slate-500">{formatPrice(tx.price)}</p>
                       </div>
                     </div>
                   ))}
@@ -350,19 +355,19 @@ export default function CityPage() {
 
           {/* Listing vs Transaction comparison */}
           {stats.listings.avgPricePerM2 > 0 && stats.transactions.avgPricePerM2 > 0 && (
-            <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Porównanie cen ofertowych i transakcyjnych</h3>
+            <div className="glass-card p-6">
+              <h3 className="text-sm font-semibold text-white mb-5 uppercase tracking-wider">Porównanie cen ofertowych i transakcyjnych</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <p className="text-sm text-slate-400 mb-1">Średnia cena ofertowa</p>
-                  <p className="text-2xl font-bold text-blue-400">{formatPricePerM2(stats.listings.avgPricePerM2)}</p>
+                  <p className="text-xs text-slate-500 mb-1.5 uppercase tracking-wider">Cena ofertowa</p>
+                  <p className="text-2xl font-bold text-indigo-400">{formatPricePerM2(stats.listings.avgPricePerM2)}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm text-slate-400 mb-1">Średnia cena transakcyjna</p>
+                  <p className="text-xs text-slate-500 mb-1.5 uppercase tracking-wider">Cena transakcyjna</p>
                   <p className="text-2xl font-bold text-emerald-400">{formatPricePerM2(stats.transactions.avgPricePerM2)}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm text-slate-400 mb-1">Różnica</p>
+                  <p className="text-xs text-slate-500 mb-1.5 uppercase tracking-wider">Różnica</p>
                   {(() => {
                     const diff = stats.listings.avgPricePerM2 - stats.transactions.avgPricePerM2;
                     const pct = ((diff / stats.transactions.avgPricePerM2) * 100).toFixed(1);
@@ -372,10 +377,10 @@ export default function CityPage() {
                       </p>
                     );
                   })()}
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-[11px] text-slate-600 mt-1">
                     {stats.listings.avgPricePerM2 > stats.transactions.avgPricePerM2
-                      ? 'Ceny ofertowe wyższe od transakcyjnych'
-                      : 'Ceny transakcyjne wyższe od ofertowych'}
+                      ? 'Ofertowe wyższe od transakcyjnych'
+                      : 'Transakcyjne wyższe od ofertowych'}
                   </p>
                 </div>
               </div>
@@ -391,11 +396,12 @@ export default function CityPage() {
       {activeTab === 'transactions' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-white">Transakcje z Rejestru Cen Nieruchomości</h3>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Transakcje z Rejestru Cen Nieruchomości</h3>
             <div className="flex gap-2">
               <button
                 onClick={() => setShowAddTx(true)}
-                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="btn-primary px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500"
+                style={{ boxShadow: '0 0 0 1px rgba(16,185,129,0.3), 0 4px 12px -2px rgba(16,185,129,0.25)' }}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -404,7 +410,7 @@ export default function CityPage() {
               </button>
               <button
                 onClick={handleImportCSV}
-                className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                className="btn-secondary px-4 py-2 text-sm"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -430,7 +436,7 @@ export default function CityPage() {
 
       {/* Last refresh info */}
       {stats.lastRefreshed && (
-        <p className="text-xs text-slate-500 text-center">
+        <p className="text-[11px] text-slate-600 text-center">
           Ostatnie odświeżenie ofert: {new Date(stats.lastRefreshed).toLocaleString('pl-PL')}
         </p>
       )}
@@ -445,19 +451,31 @@ function StatCard({ label, value, sub, color }: {
   color: string;
 }) {
   const colorMap: Record<string, string> = {
-    blue: 'border-blue-500/30 bg-blue-500/5',
-    indigo: 'border-indigo-500/30 bg-indigo-500/5',
-    emerald: 'border-emerald-500/30 bg-emerald-500/5',
-    red: 'border-red-500/30 bg-red-500/5',
-    green: 'border-green-500/30 bg-green-500/5',
-    slate: 'border-slate-600/30 bg-slate-500/5',
+    indigo: 'border-indigo-500/15',
+    purple: 'border-purple-500/15',
+    emerald: 'border-emerald-500/15',
+    red: 'border-red-500/15',
+    green: 'border-green-500/15',
+    slate: 'border-white/[0.04]',
+  };
+
+  const dotMap: Record<string, string> = {
+    indigo: 'bg-indigo-500',
+    purple: 'bg-purple-500',
+    emerald: 'bg-emerald-500',
+    red: 'bg-red-500',
+    green: 'bg-green-500',
+    slate: 'bg-slate-500',
   };
 
   return (
-    <div className={`rounded-xl border p-4 ${colorMap[color] || colorMap.slate}`}>
-      <p className="text-xs text-slate-400 mb-1">{label}</p>
+    <div className={`stat-card border-white/[0.04] ${colorMap[color] || colorMap.slate}`}>
+      <div className="flex items-center gap-2 mb-2">
+        <div className={`w-1.5 h-1.5 rounded-full ${dotMap[color] || dotMap.slate}`} />
+        <p className="text-[11px] uppercase tracking-wider text-slate-500 font-medium">{label}</p>
+      </div>
       <p className="text-xl font-bold text-white">{value}</p>
-      {sub && <p className="text-xs text-slate-400 mt-1">{sub}</p>}
+      {sub && <p className="text-xs text-slate-500 mt-1">{sub}</p>}
     </div>
   );
 }

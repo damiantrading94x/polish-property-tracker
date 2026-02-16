@@ -59,20 +59,23 @@ export default function ListingsTable({ listings }: ListingsTableProps) {
 
   if (listings.length === 0) {
     return (
-      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Oferty deweloperów</h3>
-        <div className="text-center py-8 text-slate-400">
-          <p className="text-lg mb-2">Brak ofert</p>
-          <p className="text-sm">Kliknij &quot;Pobierz z Otodom&quot; aby pobrać aktualne oferty</p>
+      <div className="glass-card p-6">
+        <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Oferty deweloperów</h3>
+        <div className="text-center py-10 text-slate-500">
+          <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+          </div>
+          <p className="text-sm mb-1">Brak ofert</p>
+          <p className="text-xs">Kliknij &quot;Pobierz z Otodom&quot; aby pobrać aktualne oferty</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-slate-800 rounded-xl border border-slate-700">
-      <div className="p-4 border-b border-slate-700 flex items-center justify-between flex-wrap gap-3">
-        <h3 className="text-lg font-semibold text-white">
+    <div className="glass-card">
+      <div className="p-4 border-b border-white/[0.04] flex items-center justify-between flex-wrap gap-3">
+        <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
           Oferty deweloperów ({filtered.length})
         </h3>
         <input
@@ -80,7 +83,7 @@ export default function ListingsTable({ listings }: ListingsTableProps) {
           placeholder="Szukaj..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="bg-slate-900 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 w-48"
+          className="input-modern text-sm w-48 py-1.5"
         />
       </div>
       <div className="overflow-x-auto">
@@ -110,7 +113,7 @@ export default function ListingsTable({ listings }: ListingsTableProps) {
                 <td className="text-right font-medium text-white">{formatPrice(listing.price)}</td>
                 <td className="text-right text-slate-300">{listing.area.toFixed(1)}</td>
                 <td className="text-right">
-                  <span className="font-medium text-blue-400">{formatPricePerM2(listing.price_per_m2)}</span>
+                  <span className="font-medium text-indigo-400">{formatPricePerM2(listing.price_per_m2)}</span>
                 </td>
                 <td className="text-right text-slate-300">{listing.rooms ?? '—'}</td>
                 <td className="text-slate-400 max-w-[150px] truncate">{listing.developer ?? '—'}</td>
@@ -120,7 +123,7 @@ export default function ListingsTable({ listings }: ListingsTableProps) {
                       href={listing.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300 text-sm"
+                      className="text-indigo-400 hover:text-indigo-300 text-sm"
                       title="Otwórz na Otodom"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

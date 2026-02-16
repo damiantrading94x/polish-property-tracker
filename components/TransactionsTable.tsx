@@ -79,12 +79,14 @@ export default function TransactionsTable({ transactions, onDelete }: Transactio
 
   if (transactions.length === 0) {
     return (
-      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
-        <div className="text-center py-8 text-slate-400">
-          <span className="text-4xl mb-3 block">📋</span>
-          <p className="text-lg mb-2">Brak danych transakcyjnych</p>
-          <p className="text-sm">Dodaj transakcje ręcznie lub zaimportuj z pliku CSV.</p>
-          <p className="text-xs mt-4 text-slate-500">
+      <div className="glass-card p-6">
+        <div className="text-center py-10 text-slate-500">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          </div>
+          <p className="text-sm mb-1">Brak danych transakcyjnych</p>
+          <p className="text-xs">Dodaj transakcje ręcznie lub zaimportuj z pliku CSV.</p>
+          <p className="text-[11px] mt-4 text-slate-600">
             Format CSV: data, cena, powierzchnia, adres, typ_rynku, typ_nieruchomosci, uwagi
           </p>
         </div>
@@ -93,31 +95,31 @@ export default function TransactionsTable({ transactions, onDelete }: Transactio
   }
 
   return (
-    <div className="bg-slate-800 rounded-xl border border-slate-700">
-      <div className="p-4 border-b border-slate-700">
+    <div className="glass-card">
+      <div className="p-4 border-b border-white/[0.04]">
         <div className="flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-400">
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-slate-500 font-medium">
               {filtered.length} transakcji
             </span>
             {avgPricePerM2 > 0 && (
               <>
-                <span className="text-sm text-slate-500">|</span>
-                <span className="text-sm text-emerald-400">
+                <span className="w-px h-3 bg-white/[0.06]"></span>
+                <span className="text-xs text-emerald-400 font-medium">
                   śr. {formatPricePerM2(avgPricePerM2)}
                 </span>
-                <span className="text-sm text-slate-500">|</span>
-                <span className="text-sm text-emerald-400/70">
+                <span className="w-px h-3 bg-white/[0.06]"></span>
+                <span className="text-xs text-emerald-400/60 font-medium">
                   med. {formatPricePerM2(medianPricePerM2)}
                 </span>
               </>
             )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <select
               value={marketFilter}
               onChange={(e) => setMarketFilter(e.target.value)}
-              className="bg-slate-900 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500"
+              className="input-modern text-sm py-1.5 w-auto"
             >
               <option value="all">Wszystkie rynki</option>
               <option value="pierwotny">Rynek pierwotny</option>
@@ -128,7 +130,7 @@ export default function TransactionsTable({ transactions, onDelete }: Transactio
               placeholder="Szukaj..."
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="bg-slate-900 border border-slate-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 w-48"
+              className="input-modern text-sm py-1.5 w-48"
             />
           </div>
         </div>

@@ -47,8 +47,8 @@ function loadDb(): DbData {
       // Ensure all arrays exist (backwards compat)
       const def = defaultDb();
       for (const key of Object.keys(def) as (keyof DbData)[]) {
-        if (!(_db as Record<string, unknown>)[key]) {
-          (_db as Record<string, unknown>)[key] = def[key];
+        if (!((_db as unknown) as Record<string, unknown>)[key]) {
+          ((_db as unknown) as Record<string, unknown>)[key] = def[key];
         }
       }
       return _db;

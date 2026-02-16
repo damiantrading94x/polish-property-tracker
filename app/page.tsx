@@ -138,8 +138,8 @@ export default function HomePage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin-slow mx-auto mb-4" />
-          <p className="text-slate-400">Ładowanie...</p>
+          <div className="w-10 h-10 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin-slow mx-auto mb-4" />
+          <p className="text-slate-500 text-sm">Ładowanie...</p>
         </div>
       </div>
     );
@@ -150,16 +150,16 @@ export default function HomePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Śledzone miasta</h2>
-          <p className="text-slate-400 mt-1">
+          <h2 className="text-2xl font-semibold text-white">Śledzone miasta</h2>
+          <p className="text-slate-500 mt-1 text-sm">
             Monitoruj ceny mieszkań i transakcje w wybranych miastach
           </p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-lg font-medium transition-colors"
+          className="btn-primary px-5 py-2.5 text-sm"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
           Dodaj miasto
@@ -168,21 +168,25 @@ export default function HomePage() {
 
       {/* City Cards Grid */}
       {cities.length === 0 ? (
-        <div className="bg-slate-800 rounded-xl border border-slate-700 p-12 text-center">
-          <span className="text-5xl mb-4 block">🏙️</span>
-          <h3 className="text-xl font-semibold text-white mb-2">Brak śledzonych miast</h3>
-          <p className="text-slate-400 mb-6">
+        <div className="glass-card p-16 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mx-auto mb-5">
+            <svg className="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 0h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-white mb-2">Brak śledzonych miast</h3>
+          <p className="text-slate-500 mb-6 text-sm">
             Dodaj miasta, których ceny mieszkań chcesz śledzić
           </p>
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg font-medium transition-colors"
+            className="btn-primary px-6 py-2.5 text-sm"
           >
             Dodaj pierwsze miasto
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {cities.map((city) => (
             <CityCard
               key={city.slug}
@@ -202,22 +206,38 @@ export default function HomePage() {
       )}
 
       {/* Info */}
-      <div className="bg-slate-800/50 rounded-xl border border-slate-700 p-6">
-        <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-          <span>ℹ️</span> Jak to działa
+      <div className="glass-card p-6">
+        <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2 uppercase tracking-wider">
+          <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          Jak to działa
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-400">
-          <div>
-            <p className="font-medium text-slate-300 mb-1">📊 Oferty deweloperów</p>
-            <p>Pobieraj aktualne oferty mieszkań z Otodom. Śledź ceny za m², liczbę ofert i zmiany cen.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+          <div className="flex gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center">
+              <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+            </div>
+            <div>
+              <p className="font-medium text-slate-300 mb-1">Oferty deweloperów</p>
+              <p className="text-slate-500 text-xs leading-relaxed">Pobieraj aktualne oferty mieszkań z Otodom. Śledź ceny za m² i zmiany cen.</p>
+            </div>
           </div>
-          <div>
-            <p className="font-medium text-slate-300 mb-1">💰 Ceny transakcyjne</p>
-            <p>Dodawaj dane z Rejestru Cen Nieruchomości (RCN). Zobacz za ile faktycznie sprzedano mieszkania.</p>
+          <div className="flex gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+              <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <div>
+              <p className="font-medium text-slate-300 mb-1">Ceny transakcyjne</p>
+              <p className="text-slate-500 text-xs leading-relaxed">Dodawaj dane z Rejestru Cen Nieruchomości (RCN). Ceny faktycznych transakcji.</p>
+            </div>
           </div>
-          <div>
-            <p className="font-medium text-slate-300 mb-1">📈 Trendy cenowe</p>
-            <p>Wykresy zmian cen w czasie. Porównuj ceny ofertowe z transakcyjnymi.</p>
+          <div className="flex gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
+            </div>
+            <div>
+              <p className="font-medium text-slate-300 mb-1">Trendy cenowe</p>
+              <p className="text-slate-500 text-xs leading-relaxed">Wykresy zmian cen w czasie. Porównuj ceny ofertowe z transakcyjnymi.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -226,9 +246,9 @@ export default function HomePage() {
       {showAddModal && (
         <div className="modal-backdrop" onClick={() => setShowAddModal(false)}>
           <div className="modal-content max-w-md" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-5">
               <h3 className="text-lg font-semibold text-white">Dodaj miasto</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setShowAddModal(false)} className="text-slate-500 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/[0.05]">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -241,14 +261,14 @@ export default function HomePage() {
               placeholder="Szukaj miasta..."
               value={addSearch}
               onChange={(e) => setAddSearch(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 mb-4"
+              className="input-modern mb-4"
               autoFocus
             />
 
             {/* City list */}
-            <div className="max-h-64 overflow-y-auto space-y-1 mb-4">
+            <div className="max-h-64 overflow-y-auto space-y-0.5 mb-4">
               {filteredCities.length === 0 && !showCustomForm ? (
-                <p className="text-slate-400 text-sm py-4 text-center">
+                <p className="text-slate-500 text-sm py-6 text-center">
                   {addSearch ? 'Nie znaleziono miasta. Dodaj ręcznie poniżej.' : 'Wszystkie predefiniowane miasta są już dodane.'}
                 </p>
               ) : (
@@ -256,13 +276,13 @@ export default function HomePage() {
                   <button
                     key={city.otodom_city_slug}
                     onClick={() => handleAddCity(city)}
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors text-left"
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/[0.04] transition-colors text-left group/item"
                   >
                     <div>
-                      <p className="text-white font-medium">{city.name}</p>
-                      <p className="text-xs text-slate-400">{city.voivodeship}</p>
+                      <p className="text-white font-medium text-sm">{city.name}</p>
+                      <p className="text-xs text-slate-500">{city.voivodeship}</p>
                     </div>
-                    <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-slate-600 group-hover/item:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
                   </button>
@@ -271,17 +291,17 @@ export default function HomePage() {
             </div>
 
             {/* Custom city form */}
-            <div className="border-t border-slate-700 pt-4">
+            <div className="border-t border-white/[0.04] pt-4">
               {!showCustomForm ? (
                 <button
                   onClick={() => setShowCustomForm(true)}
-                  className="text-sm text-blue-400 hover:text-blue-300 font-medium"
+                  className="text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
                 >
                   + Dodaj inne miasto ręcznie
                 </button>
               ) : (
                 <div className="space-y-3">
-                  <p className="text-sm text-slate-400">
+                  <p className="text-xs text-slate-500">
                     Wpisz dane miasta (slug Otodom znajdziesz w URL na otodom.pl)
                   </p>
                   <input
@@ -289,39 +309,39 @@ export default function HomePage() {
                     placeholder="Nazwa miasta (np. Augustów)"
                     value={customCity.name}
                     onChange={(e) => setCustomCity(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                    className="input-modern text-sm"
                   />
                   <input
                     type="text"
                     placeholder="Województwo (np. podlaskie)"
                     value={customCity.voivodeship}
                     onChange={(e) => setCustomCity(prev => ({ ...prev, voivodeship: e.target.value }))}
-                    className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                    className="input-modern text-sm"
                   />
                   <input
                     type="text"
                     placeholder="Slug województwa w URL (np. podlaskie)"
                     value={customCity.voivodeship_slug}
                     onChange={(e) => setCustomCity(prev => ({ ...prev, voivodeship_slug: e.target.value }))}
-                    className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                    className="input-modern text-sm"
                   />
                   <input
                     type="text"
                     placeholder="Slug miasta w URL Otodom (np. augustow)"
                     value={customCity.otodom_city_slug}
                     onChange={(e) => setCustomCity(prev => ({ ...prev, otodom_city_slug: e.target.value }))}
-                    className="w-full bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                    className="input-modern text-sm"
                   />
                   <div className="flex gap-2">
                     <button
                       onClick={handleAddCustomCity}
-                      className="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                      className="flex-1 btn-primary justify-center px-4 py-2 text-sm"
                     >
                       Dodaj
                     </button>
                     <button
                       onClick={() => setShowCustomForm(false)}
-                      className="px-4 py-2 rounded-lg text-sm text-slate-400 hover:text-white transition-colors"
+                      className="px-4 py-2 rounded-xl text-sm text-slate-500 hover:text-white transition-colors"
                     >
                       Anuluj
                     </button>
